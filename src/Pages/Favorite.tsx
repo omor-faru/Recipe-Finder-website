@@ -2,11 +2,19 @@ import { useEffect, useState } from "react"
 import { HeartCrack } from "lucide-react"
 import RecipeCard from "../Components/RecipeCard"
 
+
+interface Recipe {
+  idMeal: string
+  strMeal: string
+  strMealThumb: string
+  strSource: string
+}
+
 const Favorite = () => {
-  const [favorites, setFavorites] = useState([])
+  const [favorites, setFavorites] = useState<Recipe[]>([]) // টাইপ সেট করলাম
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("favorites") || "[]")
+    const saved: Recipe[] = JSON.parse(localStorage.getItem("favorites") || "[]")
     setFavorites(saved)
   }, [])
 
@@ -29,7 +37,7 @@ const Favorite = () => {
         </div>
       ) : (
         <div className="grid sm:grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
-          {favorites.map((item) => (
+          {favorites.map((item: Recipe) => (
             <RecipeCard key={item.idMeal} item={item} />
           ))}
         </div>
@@ -39,5 +47,3 @@ const Favorite = () => {
 }
 
 export default Favorite
-
-

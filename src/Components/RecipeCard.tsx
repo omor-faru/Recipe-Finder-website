@@ -1,25 +1,31 @@
 import { Heart, HeartIcon } from "lucide-react"
 import { useState, useEffect } from "react"
 
-const RecipeCard = ({ item }) => {
+
+interface Recipe {
+  idMeal: string
+  strMeal: string
+  strMealThumb: string
+  strSource: string
+}
+
+
+const RecipeCard = ({ item }: { item: Recipe }) => {
   const [fav, setFav] = useState(false)
 
-
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("favorites") || "[]")
-    const exists = saved.some((f) => f.idMeal === item.idMeal)
+    const saved: Recipe[] = JSON.parse(localStorage.getItem("favorites") || "[]")
+    const exists = saved.some((f: Recipe) => f.idMeal === item.idMeal)
     setFav(exists)
   }, [item.idMeal])
 
   const toggleFavourite = () => {
-    let saved = JSON.parse(localStorage.getItem("favorites") || "[]")
+    let saved: Recipe[] = JSON.parse(localStorage.getItem("favorites") || "[]")
 
     if (fav) {
-      
-      saved = saved.filter((f) => f.idMeal !== item.idMeal)
+      saved = saved.filter((f: Recipe) => f.idMeal !== item.idMeal)
       setFav(false)
     } else {
-      
       saved.push(item)
       setFav(true)
     }
@@ -60,4 +66,3 @@ const RecipeCard = ({ item }) => {
 }
 
 export default RecipeCard
-
